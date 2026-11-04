@@ -1,0 +1,239 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio | Pet Concierge{% endblock %}
+
+{% block body %}
+
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="site-header__brand" href="{{ path('app_home') }}">
+            <span class="site-header__symbol">🐾</span>
+            <span>Pet <strong>Concierge</strong></span>
+        </a>
+
+        <nav class="site-header__nav" aria-label="Navegación principal">
+            <a href="#inicio">Inicio</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#planes">Planes</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_estadisticas') }}">Estadísticas</a>
+            {% endif %}
+        </nav>
+
+        <div class="site-header__actions">
+    <span class="site-header__label">Eco-friendly pets</span>
+
+    {% if app.user %}
+        <span class="site-header__welcome">
+            Hola, {{ app.user.nombre }}
+        </span>
+
+        <form
+            class="site-header__logout"
+            action="{{ path('app_salir') }}"
+            method="post"
+        >
+            <input
+                type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('logout') }}"
+            >
+
+            <button class="site-header__login" type="submit">
+                Cerrar sesión
+            </button>
+        </form>
+    {% else %}
+        <a
+            class="site-header__login"
+            href="{{ path('app_login') }}"
+        >
+            Iniciar sesión
+        </a>
+    {% endif %}
+</div>
+    </div>
+</header>
+
+<main>
+
+    <section class="home-hero" id="inicio">
+        <div class="home-hero__inner">
+
+            <div class="home-hero__content">
+                <span class="home-hero__eyebrow">
+                    Cuidado y bienestar animal
+                </span>
+
+                <h1 class="home-hero__title">
+                    Paseos felices,
+                    <span>mascotas saludables.</span>
+                </h1>
+
+                <p class="home-hero__description">
+                    Bienvenido a Pet Concierge, una plataforma
+                    dedicada a conectar el bienestar de tus perros
+                    con una forma más inteligente de organizar
+                    sus paseos y planes prepagados.
+                </p>
+
+                <div class="home-hero__actions">
+                    <a href="#planes" class="button button--primary">
+                        Conocer los planes
+                    </a>
+
+                    <a href="#servicios" class="button button--outline">
+                        Descubrir más
+                    </a>
+                </div>
+
+                <div class="home-hero__note">
+                    <span>✓</span>
+                    Bienestar, confianza y organización.
+                </div>
+            </div>
+
+            <div class="home-hero__visual">
+                <div class="home-hero__circle"></div>
+
+                {% if imagenes.paseo %}
+                    <img
+                        class="home-hero__dog"
+                        src="{{ asset(imagenes.paseo) }}"
+                        alt="Bluey disfrutando de un paseo"
+                    >
+                {% endif %}
+
+                {% if imagenes.sentado %}
+                    <img
+                        class="home-hero__mascot"
+                        src="{{ asset(imagenes.sentado) }}"
+                        alt="Bluey sentado"
+                    >
+                {% endif %}
+
+                <div class="home-hero__tag">
+                    🐾 Amor por cada paseo
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="home-section" id="servicios">
+        <div class="home-section__heading">
+            <span class="section-eyebrow">Nuestra plataforma</span>
+            <h2>Todo pensado para sus mejores amigos</h2>
+            <p>
+                Una experiencia organizada para clientes,
+                sus mascotas y la administración del servicio.
+            </p>
+        </div>
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+                <span class="feature-card__icon">🐶</span>
+                <h3 class="feature-card__title">Tus mascotas</h3>
+                <p class="feature-card__text">
+                    Registra a tus perros y mantén organizada
+                    su información desde un mismo lugar.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-card__icon">🌿</span>
+                <h3 class="feature-card__title">Planes prepagados</h3>
+                <p class="feature-card__text">
+                    Organiza los paseos con planes
+                    adaptados a las necesidades de cada cliente.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-card__icon">📊</span>
+                <h3 class="feature-card__title">Control inteligente</h3>
+                <p class="feature-card__text">
+                    Analiza suscripciones, utilización,
+                    ingresos y riesgos mediante estadísticas.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="showcase" id="planes">
+        <div class="showcase__content">
+            <span class="section-eyebrow">Planes prepagados</span>
+            <h2>Más paseos, mejor organización.</h2>
+            <p>
+                Pet Concierge contará con diferentes planes
+                para organizar los paseos de forma flexible.
+                Cada suscripción permitirá llevar un control
+                de los servicios contratados y utilizados.
+            </p>
+
+            <div class="showcase__chips">
+                <span>Semana Pet</span>
+                <span>Plan 2X</span>
+                <span>Plan 3X</span>
+                <span>Plan Laboral</span>
+            </div>
+        </div>
+
+        <div class="showcase__visual">
+            {% if imagenes.amigos %}
+                <img
+                    src="{{ asset(imagenes.amigos) }}"
+                    alt="Bluey junto a sus amigos"
+                >
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="analytics-preview" id="core">
+        <div class="analytics-preview__inner">
+
+            <div class="analytics-preview__visual">
+                {% if imagenes.estadisticas %}
+                    <img
+                        src="{{ asset(imagenes.estadisticas) }}"
+                        alt="Bluey explicando estadísticas"
+                    >
+                {% endif %}
+            </div>
+
+            <div class="analytics-preview__content">
+                <span class="section-eyebrow">
+                    Nuestro Core MVC
+                </span>
+
+                <h2>Datos que ayudan a tomar mejores decisiones.</h2>
+
+                <p>
+                    Nuestro módulo analítico permitirá estudiar
+                    suscripciones, ingresos, utilización de paseos,
+                    proyecciones y factores de riesgo.
+                </p>
+
+                <div class="analytics-preview__features">
+                    <span>✓ Reportes mensuales</span>
+                    <span>✓ Estadísticas de suscripción</span>
+                    <span>✓ Proyecciones</span>
+                    <span>✓ Análisis de riesgos</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <span>🐾 Pet Concierge</span>
+        <span>Cuidamos sus pasos, pensamos en su bienestar.</span>
+    </div>
+</footer>
+
+{% endblock %}

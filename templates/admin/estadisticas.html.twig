@@ -1,0 +1,476 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dashboard administrativo | Pet Concierge
+{% endblock %}
+
+{% block body %}
+
+<div class="admin-shell">
+
+    <header class="admin-shell__topbar">
+
+        <a
+            class="admin-shell__brand"
+            href="{{ path('app_admin_dashboard') }}"
+        >
+            🐾 Pet <strong>Concierge</strong>
+        </a>
+
+        <div class="admin-shell__account">
+            <div class="admin-shell__identity">
+                <strong>{{ app.user.nombreCompleto }}</strong>
+                <span>Administrador</span>
+            </div>
+
+            <form
+                action="{{ path('app_salir') }}"
+                method="post"
+            >
+                <input
+                    type="hidden"
+                    name="_csrf_token"
+                    value="{{ csrf_token('logout') }}"
+                >
+
+                <button
+                    class="admin-shell__logout"
+                    type="submit"
+                >
+                    Cerrar sesión
+                </button>
+            </form>
+        </div>
+
+    </header>
+
+    <div class="admin-shell__body">
+
+        <aside class="admin-shell__sidebar">
+
+            <div class="admin-nav">
+
+                <span class="admin-nav__heading">
+                    GENERAL
+                </span>
+
+                <a
+                    class="admin-nav__item admin-nav__item--active"
+                    href="{{ path('app_admin_dashboard') }}"
+                >
+                    <span>📊</span> Dashboard
+                </a>
+
+                <span class="admin-nav__heading">
+                    ADMINISTRACIÓN
+                </span>
+
+                <a
+                    class="admin-nav__item"
+                    href="{{ path('app_admin_usuarios') }}"
+                >
+                    <span>👥</span> Usuarios
+                </a>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>🐶</span> Perros
+                    <small>Próximamente</small>
+                </span>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>🌿</span> Planes
+                    <small>Próximamente</small>
+                </span>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>📋</span> Suscripciones
+                    <small>Próximamente</small>
+                </span>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>🐕</span> Paseos
+                    <small>Próximamente</small>
+                </span>
+
+                <span class="admin-nav__heading">
+                    CORE ANALÍTICO
+                </span>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>📈</span> Reportes
+                    <small>Próximamente</small>
+                </span>
+
+                <span class="admin-nav__item admin-nav__item--disabled">
+                    <span>⚠️</span> Riesgos
+                    <small>Próximamente</small>
+                </span>
+
+            </div>
+
+            <div class="admin-shell__sidebar-note">
+                🌱 Gestión inteligente y bienestar animal
+            </div>
+
+        </aside>
+
+        <main class="admin-shell__main">
+
+            <section class="admin-dashboard__welcome">
+
+                <div class="admin-dashboard__welcome-copy">
+
+                    <span class="admin-dashboard__eyebrow">
+                        PANEL DE CONTROL
+                    </span>
+
+                    <h1>
+                        Bienvenido,
+                        {{ app.user.nombre }}
+                        👋
+                    </h1>
+
+                    <p>
+                        Administra Pet Concierge y consulta
+                        la información que alimenta
+                        nuestro Core estadístico.
+                    </p>
+
+                    <span class="admin-dashboard__welcome-tag">
+                        ● Sistema administrativo activo
+                    </span>
+
+                </div>
+
+                {% if imagen_estadisticas %}
+                    <img
+                        class="admin-dashboard__mascot"
+                        src="{{ asset(imagen_estadisticas) }}"
+                        alt="Bluey presentando estadísticas"
+                    >
+                {% else %}
+                    <span class="admin-dashboard__mascot-fallback">
+                        🐶
+                    </span>
+                {% endif %}
+
+            </section>
+
+            <div class="admin-dashboard__section-heading">
+                <h2>Resumen general</h2>
+                <span>Datos actuales de SQLite</span>
+            </div>
+
+            <section class="admin-dashboard__stats">
+
+                <article class="admin-stat">
+                    <span class="admin-stat__icon">
+                        👥
+                    </span>
+
+                    <span class="admin-stat__label">
+                        Usuarios totales
+                    </span>
+
+                    <strong class="admin-stat__value">
+                        {{ resumen.total }}
+                    </strong>
+
+                    <span class="admin-stat__detail">
+                        Cuentas registradas
+                    </span>
+                </article>
+
+                <article class="admin-stat">
+                    <span class="admin-stat__icon">
+                        🐶
+                    </span>
+
+                    <span class="admin-stat__label">
+                        Clientes
+                    </span>
+
+                    <strong class="admin-stat__value">
+                        {{ resumen.clientes }}
+                    </strong>
+
+                    <span class="admin-stat__detail">
+                        {{ resumen.porcentajeClientes }} %
+                        del total
+                    </span>
+                </article>
+
+                <article class="admin-stat">
+                    <span class="admin-stat__icon">
+                        🐾
+                    </span>
+
+                    <span class="admin-stat__label">
+                        Paseadores
+                    </span>
+
+                    <strong class="admin-stat__value">
+                        {{ resumen.paseadores }}
+                    </strong>
+
+                    <span class="admin-stat__detail">
+                        {{ resumen.porcentajePaseadores }} %
+                        del total
+                    </span>
+                </article>
+
+                <article class="admin-stat">
+                    <span class="admin-stat__icon">
+                        🔐
+                    </span>
+
+                    <span class="admin-stat__label">
+                        Administradores
+                    </span>
+
+                    <strong class="admin-stat__value">
+                        {{ resumen.administradores }}
+                    </strong>
+
+                    <span class="admin-stat__detail">
+                        {{ resumen.activos }}
+                        cuentas activas en total
+                    </span>
+                </article>
+
+            </section>
+
+            <div class="admin-dashboard__section-heading">
+                <h2>Estadísticas de usuarios</h2>
+                <span>Distribución por rol</span>
+            </div>
+
+            <section class="admin-dashboard__analytics">
+
+                <article class="admin-panel">
+
+                    <h3 class="admin-panel__title">
+                        Distribución de cuentas
+                    </h3>
+
+                    <p class="admin-panel__subtitle">
+                        Porcentaje calculado con los
+                        usuarios registrados.
+                    </p>
+
+                    <div class="admin-bars">
+
+                        <div class="admin-bars__item">
+                            <div class="admin-bars__label">
+                                <span>Clientes</span>
+                                <strong>
+                                    {{ resumen.clientes }}
+                                    ({{ resumen.porcentajeClientes }}%)
+                                </strong>
+                            </div>
+
+                            <div class="admin-bars__track">
+                                <div
+                                    class="admin-bars__fill admin-bars__fill--clients"
+                                    style="width: {{ resumen.porcentajeClientes }}%"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <div class="admin-bars__item">
+                            <div class="admin-bars__label">
+                                <span>Paseadores</span>
+                                <strong>
+                                    {{ resumen.paseadores }}
+                                    ({{ resumen.porcentajePaseadores }}%)
+                                </strong>
+                            </div>
+
+                            <div class="admin-bars__track">
+                                <div
+                                    class="admin-bars__fill admin-bars__fill--walkers"
+                                    style="width: {{ resumen.porcentajePaseadores }}%"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <div class="admin-bars__item">
+                            <div class="admin-bars__label">
+                                <span>Administradores</span>
+                                <strong>
+                                    {{ resumen.administradores }}
+                                    ({{ resumen.porcentajeAdministradores }}%)
+                                </strong>
+                            </div>
+
+                            <div class="admin-bars__track">
+                                <div
+                                    class="admin-bars__fill admin-bars__fill--admins"
+                                    style="width: {{ resumen.porcentajeAdministradores }}%"
+                                ></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <p class="admin-panel__hint">
+                        Los gráficos cambian cuando se registran
+                        nuevas cuentas.
+                    </p>
+
+                </article>
+
+                <article class="admin-panel">
+
+                    <h3 class="admin-panel__title">
+                        Módulo financiero
+                    </h3>
+
+                    <p class="admin-panel__subtitle">
+                        Indicadores del Core en preparación.
+                    </p>
+
+                    <div class="admin-pending">
+                        <div class="admin-pending__row">
+                            <span>Usuarios con plan</span>
+                            <strong>Pendiente</strong>
+                        </div>
+
+                        <div class="admin-pending__row">
+                            <span>Ingresos por suscripciones</span>
+                            <strong>Pendiente</strong>
+                        </div>
+
+                        <div class="admin-pending__row">
+                            <span>Paseos completados</span>
+                            <strong>Pendiente</strong>
+                        </div>
+
+                        <div class="admin-pending__row">
+                            <span>Nivel de riesgo</span>
+                            <strong>Pendiente</strong>
+                        </div>
+                    </div>
+
+                    <p class="admin-panel__hint">
+                        Se activarán al incorporar planes,
+                        suscripciones y paseos.
+                    </p>
+
+                </article>
+
+            </section>
+
+            <div class="admin-dashboard__section-heading">
+                <h2>Gestión rápida</h2>
+                <span>Administración MVC</span>
+            </div>
+
+            <section class="admin-dashboard__bottom">
+
+                <article class="admin-panel">
+                    <div class="admin-panel__header">
+                        <div>
+                            <h3 class="admin-panel__title">
+                                Usuarios recientes
+                            </h3>
+
+                            <p class="admin-panel__subtitle">
+                                Últimas cuentas registradas
+                            </p>
+                        </div>
+
+                        <a
+                            class="admin-panel__link"
+                            href="{{ path('app_admin_usuarios') }}"
+                        >
+                            Ver todos
+                        </a>
+                    </div>
+
+                    <div class="admin-recent">
+
+                        {% for usuario in resumen.ultimosUsuarios %}
+
+                            <div class="admin-recent__item">
+                                <div class="admin-recent__avatar">
+                                    {{ usuario.nombre|slice(0, 1)|upper }}
+                                </div>
+
+                                <div class="admin-recent__identity">
+                                    <strong>
+                                        {{ usuario.nombreCompleto }}
+                                    </strong>
+
+                                    <small>
+                                        {{ usuario.email }}
+                                    </small>
+                                </div>
+
+                                <span class="admin-recent__role">
+                                    {% if 'ROLE_ADMIN' in usuario.roles %}
+                                        Admin
+                                    {% elseif 'ROLE_PASEADOR' in usuario.roles %}
+                                        Paseador
+                                    {% else %}
+                                        Cliente
+                                    {% endif %}
+                                </span>
+                            </div>
+
+                        {% else %}
+
+                            <p>
+                                Aún no hay usuarios registrados.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </article>
+
+                <article class="admin-panel admin-panel--actions">
+
+                    <h3 class="admin-panel__title">
+                        Accesos rápidos
+                    </h3>
+
+                    <p class="admin-panel__subtitle">
+                        Accede a las herramientas disponibles.
+                    </p>
+
+                    <a
+                        class="admin-quick-link"
+                        href="{{ path('app_admin_usuarios') }}"
+                    >
+                        <span>👥 Gestión de usuarios</span>
+                        <span>→</span>
+                    </a>
+
+                    <div class="admin-quick-link admin-quick-link--disabled">
+                        <span>🐶 Gestión de perros</span>
+                        <small>Próximamente</small>
+                    </div>
+
+                    <div class="admin-quick-link admin-quick-link--disabled">
+                        <span>🌿 Planes prepagados</span>
+                        <small>Próximamente</small>
+                    </div>
+
+                    <div class="admin-quick-link admin-quick-link--disabled">
+                        <span>📊 Reportes financieros</span>
+                        <small>Próximamente</small>
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+{% endblock %}

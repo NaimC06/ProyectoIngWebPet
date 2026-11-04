@@ -1,0 +1,21 @@
+{
+  "name": "pet-concierge-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "styles:build": "sass assets/styles/app.scss assets/styles/app.css --no-source-map",
+    "styles:watch": "sass --watch assets/styles/app.scss:assets/styles/app.css --no-source-map"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.107.1"
+  }
+}

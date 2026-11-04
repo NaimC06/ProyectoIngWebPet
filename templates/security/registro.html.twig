@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear cuenta | Pet Concierge{% endblock %}
+
+{% block body %}
+
+<main class="register">
+
+    <div class="register__container">
+
+        <a class="register__back" href="{{ path('app_login') }}">
+            ← Volver al login
+        </a>
+
+        <header class="register__header">
+            <span class="register__eyebrow">
+                🐾 BIENVENIDO A PET CONCIERGE
+            </span>
+
+            <h1>Crea tu cuenta</h1>
+
+            <p>
+                Únete como cliente o paseador.
+                Completa tus datos para comenzar.
+            </p>
+        </header>
+
+        <section class="register__card">
+
+            {{ form_start(formulario, {
+                attr: {
+                    class: 'register__form',
+                    novalidate: 'novalidate'
+                }
+            }) }}
+
+                {{ form_errors(formulario) }}
+
+                <div class="register__section">
+                    <h2>1. Tipo de cuenta</h2>
+
+                    <div class="register__field">
+                        {{ form_row(formulario.tipoCuenta) }}
+                    </div>
+                </div>
+
+                <div class="register__section">
+                    <h2>2. Información personal</h2>
+
+                    <div class="register__grid">
+                        <div class="register__field">
+                            {{ form_row(formulario.nombre) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.apellido) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.email) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.cedula) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.telefono) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.clave) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="register__section" data-cliente-fields>
+                    <h2>3. Registra tu primer perro 🐶</h2>
+
+                    <p>
+                        Puedes registrar más perros
+                        desde tu cuenta posteriormente.
+                    </p>
+
+                    <div class="register__grid">
+                        <div class="register__field">
+                            {{ form_row(formulario.perroNombre) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.perroRaza) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.perroEdad) }}
+                        </div>
+
+                        <div class="register__field">
+                            {{ form_row(formulario.perroTamano) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="register__section" data-paseador-fields hidden>
+                    <h2>3. Información del paseador 🐾</h2>
+
+                    <p>
+                        Indica dónde deseas ofrecer
+                        los servicios de paseo.
+                    </p>
+
+                    <div class="register__field">
+                        {{ form_row(formulario.zonaTrabajo) }}
+                    </div>
+                </div>
+
+                <div class="register__actions">
+                    <button class="register__submit" type="submit">
+                        Crear mi cuenta
+                    </button>
+
+                    <p>
+                        ¿Ya tienes una cuenta?
+                        <a href="{{ path('app_login') }}">
+                            Inicia sesión
+                        </a>
+                    </p>
+                </div>
+
+            {{ form_end(formulario) }}
+
+        </section>
+
+    </div>
+
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const selector = document.querySelector('[data-registro-tipo]');
+    const camposCliente = document.querySelector('[data-cliente-fields]');
+    const camposPaseador = document.querySelector('[data-paseador-fields]');
+
+    if (!selector || !camposCliente || !camposPaseador) {
+        return;
+    }
+
+    const actualizar = () => {
+        camposCliente.hidden = selector.value !== 'ROLE_CLIENTE';
+        camposPaseador.hidden = selector.value !== 'ROLE_PASEADOR';
+    };
+
+    selector.addEventListener('change', actualizar);
+    actualizar();
+});
+</script>
+
+{% endblock %}

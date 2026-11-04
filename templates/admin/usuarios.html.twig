@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuarios | Pet Concierge{% endblock %}
+
+{% block body %}
+
+<main class="users-admin">
+    <div class="users-admin__container">
+
+        <header class="users-admin__header">
+            <a class="users-admin__brand" href="{{ path('app_admin_estadisticas') }}">
+                🐾 Pet <strong>Concierge</strong>
+            </a>
+
+            <nav class="users-admin__navigation">
+                <a href="{{ path('app_admin_estadisticas') }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ path('app_admin_usuarios') }}">
+                    Usuarios
+                </a>
+
+                <form action="{{ path('app_salir') }}" method="post">
+                    <input type="hidden"
+                           name="_csrf_token"
+                           value="{{ csrf_token('logout') }}">
+
+                    <button class="users-admin__logout">
+                        Cerrar sesión
+                    </button>
+                </form>
+            </nav>
+        </header>
+
+        <section class="users-admin__intro">
+            <div>
+                <span class="users-admin__eyebrow">
+                    ADMINISTRACIÓN MVC
+                </span>
+
+                <h1>Gestión de usuarios</h1>
+
+                <p>
+                    Administra las cuentas que alimentan
+                    Pet Concierge y sus estadísticas.
+                </p>
+            </div>
+
+            <div class="users-admin__intro-icon">
+                🐶
+            </div>
+        </section>
+
+        <section class="users-admin__stats">
+            <article class="users-admin__stat">
+                <span>Total de usuarios</span>
+                <strong>{{ resumen.total }}</strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Clientes</span>
+                <strong>{{ resumen.clientes }}</strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Paseadores</span>
+                <strong>{{ resumen.paseadores }}</strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Administradores</span>
+                <strong>{{ resumen.administradores }}</strong>
+            </article>
+        </section>
+
+        {% for mensaje in app.flashes('success') %}
+            <div class="admin-user-alert" role="status">
+                ✓ {{ mensaje }}
+            </div>
+        {% endfor %}
+
+        <section class="users-admin__panel">
+            <div class="users-admin__panel-heading">
+                <div>
+                    <h2>Usuarios registrados</h2>
+                    <p>
+                        Información obtenida desde SQLite.
+                    </p>
+                </div>
+
+                <span class="users-admin__count">Registro público habilitado</span>
+            </div>
+
+            <div class="users-admin__table-wrapper">
+                <table class="users-admin__table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre / correo</th>
+                            <th>Rol</th>
+                            <th>Cédula</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>#{{ usuario.id }}</td>
+
+                            <td>
+                                <strong>
+                                    {{ usuario.nombreCompleto }}
+                                </strong>
+
+                                <small>{{ usuario.email }}</small>
+                            </td>
+
+                            <td>
+                                {% if 'ROLE_ADMIN' in usuario.roles %}
+                                    <span class="users-admin__role users-admin__role--admin">
+                                        Administrador
+                                    </span>
+                                {% elseif 'ROLE_PASEADOR' in usuario.roles %}
+                                    <span class="users-admin__role users-admin__role--walker">
+                                        Paseador
+                                    </span>
+                                {% else %}
+                                    <span class="users-admin__role users-admin__role--client">
+                                        Cliente
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ usuario.cedula ?? 'Pendiente' }}
+                            </td>
+
+                            <td>
+                                {% if usuario.activo %}
+                                    <span class="users-admin__status users-admin__status--active">
+                                        Activo
+                                    </span>
+                                {% else %}
+                                    <span class="users-admin__status users-admin__status--inactive">
+                                        Inactivo
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a class="admin-user-link"
+                                   href="{{ path('app_admin_usuario_editar', {id: usuario.id}) }}">
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">
+                                No hay usuarios registrados.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+{% endblock %}

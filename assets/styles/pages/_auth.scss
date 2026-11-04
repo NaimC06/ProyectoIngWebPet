@@ -1,0 +1,425 @@
+// =====================================
+// PET CONCIERGE - LOGIN
+// SCSS + BEM + FLEXBOX
+// =====================================
+
+// Encabezado: botones de sesión
+.site-header {
+    &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    &__login {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 20px;
+        min-height: 42px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(120deg, #2378b5, #28a878);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform .2s, box-shadow .2s;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(35, 120, 181, .2);
+        }
+    }
+
+    &__welcome {
+        font-size: 13px;
+        color: #173d53;
+        font-weight: 600;
+    }
+
+    &__logout {
+        margin: 0;
+    }
+}
+
+// Fondo general del login
+.auth-page {
+    min-height: 100vh;
+    padding: 30px 25px 60px;
+
+    background:
+        radial-gradient(
+            circle at 12% 15%,
+            rgba(111, 198, 242, .23),
+            transparent 36%
+        ),
+        radial-gradient(
+            circle at 88% 88%,
+            rgba(91, 212, 151, .2),
+            transparent 38%
+        ),
+        #f7fbfa;
+
+    &__back {
+        display: inline-flex;
+        margin-bottom: 25px;
+        color: #2378b5;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Tarjeta principal del login
+.auth-card {
+    max-width: 1060px;
+    min-height: 570px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: stretch;
+
+    background: #ffffff;
+    border: 1px solid #e2eaf0;
+    border-radius: 28px;
+    overflow: hidden;
+
+    box-shadow: 0 24px 75px rgba(23, 61, 83, .1);
+
+    // Columna izquierda: Bluey
+    &__visual {
+        flex: 1 1 50%;
+        min-width: 0;
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 35px 30px;
+        overflow: hidden;
+
+        background: linear-gradient(
+            140deg,
+            #dceeff 0%,
+            #d5f5e5 100%
+        );
+    }
+
+    &__decoration {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        top: 15%;
+        left: 10%;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .35);
+    }
+
+    &__brand {
+        z-index: 2;
+        position: relative;
+        align-self: flex-start;
+
+        color: #173d53;
+        font-size: 22px;
+        font-weight: 700;
+        text-decoration: none;
+
+        strong {
+            color: #28a878;
+        }
+    }
+
+    &__illustration {
+        position: relative;
+        z-index: 2;
+
+        width: 100%;
+        min-height: 300px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            max-height: 330px;
+            max-width: 100%;
+            object-fit: contain;
+
+            filter: drop-shadow(
+                0 15px 12px rgba(23, 61, 83, .12)
+            );
+        }
+    }
+
+    &__placeholder {
+        font-size: 130px;
+    }
+
+    &__visual-text {
+        z-index: 2;
+        position: relative;
+        text-align: center;
+
+        span {
+            color: #208c72;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin: 10px 0;
+            color: #173d53;
+            font-size: 30px;
+            line-height: 1.2;
+        }
+
+        p {
+            max-width: 350px;
+            margin: 0 auto;
+            color: #617d88;
+            font-size: 13px;
+        }
+    }
+
+    // Columna derecha: formulario
+    &__content {
+        flex: 1 1 50%;
+        min-width: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 50px 55px 30px;
+        background: #ffffff;
+    }
+
+    &__heading {
+        margin-bottom: 30px;
+
+        h1 {
+            margin: 10px 0;
+            font-size: clamp(30px, 4vw, 42px);
+            line-height: 1.15;
+            color: #173d53;
+        }
+
+        p {
+            color: #748b96;
+            font-size: 14px;
+        }
+    }
+
+    &__eyebrow {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+        color: #28a878;
+    }
+
+    &__footer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+
+        margin-top: 40px;
+        color: #8d9fa8;
+        font-size: 11px;
+    }
+}
+
+// Formulario BEM
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__label {
+        color: #344b59;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    &__input {
+        width: 100%;
+        min-height: 50px;
+        padding: 12px 15px;
+
+        border: 1px solid #d3e1e9;
+        border-radius: 12px;
+        outline: none;
+
+        background: #fbfdfe;
+        color: #173d53;
+
+        transition: border-color .2s, box-shadow .2s;
+
+        &::placeholder {
+            color: #9aaab4;
+        }
+
+        &:focus {
+            border-color: #28a878;
+            box-shadow: 0 0 0 4px rgba(40, 168, 120, .12);
+        }
+    }
+
+    &__submit {
+        width: 100%;
+        min-height: 52px;
+        margin-top: 5px;
+
+        border: none;
+        border-radius: 13px;
+
+        background: linear-gradient(
+            110deg,
+            #2378b5,
+            #28a878
+        );
+
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+
+        box-shadow: 0 10px 22px rgba(35, 120, 181, .17);
+
+        transition: transform .2s, filter .2s;
+
+        &:hover {
+            transform: translateY(-2px);
+            filter: brightness(.96);
+        }
+    }
+
+    &__error {
+        padding: 13px;
+        border: 1px solid #efbbbb;
+        border-radius: 12px;
+        background: #fff1f1;
+        color: #ad3939;
+        font-size: 13px;
+    }
+
+    &__note {
+        margin: 0;
+        text-align: center;
+        color: #8296a0;
+        font-size: 12px;
+    }
+}
+
+// Área administrativa provisional
+.admin-preview {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background: #f7fbfa;
+
+    &__content {
+        width: min(700px, 100%);
+        padding: 45px;
+        border-radius: 22px;
+        border: 1px solid #e7edf1;
+        background: #ffffff;
+        box-shadow: 0 15px 40px rgba(23, 61, 83, .07);
+    }
+
+    &__eyebrow {
+        display: block;
+        margin-top: 24px;
+        color: #28a878;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    h1 {
+        color: #173d53;
+    }
+
+    p {
+        color: #637a86;
+    }
+
+    button {
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        background: #2378b5;
+        color: #ffffff;
+        cursor: pointer;
+        font-weight: 700;
+    }
+}
+
+// Responsive
+@media (max-width: 850px) {
+    .auth-card {
+        flex-direction: column;
+
+        &__visual {
+            min-height: 340px;
+        }
+
+        &__illustration {
+            min-height: 180px;
+
+            img {
+                max-height: 200px;
+            }
+        }
+
+        &__content {
+            padding: 40px 30px;
+        }
+    }
+
+    .site-header__actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-page {
+        padding: 18px 13px 35px;
+    }
+
+    .auth-card {
+        border-radius: 18px;
+
+        &__visual {
+            padding: 22px;
+        }
+
+        &__content {
+            padding: 32px 22px;
+        }
+
+        &__visual-text h2 {
+            font-size: 25px;
+        }
+    }
+}

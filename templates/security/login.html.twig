@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Iniciar sesión | Pet Concierge{% endblock %}
+
+{% block body %}
+
+<main class="auth-page">
+
+    <a class="auth-page__back" href="{{ path('app_home') }}">
+        ← Volver al inicio
+    </a>
+
+    <section class="auth-card">
+
+        <div class="auth-card__visual">
+            <div class="auth-card__decoration"></div>
+
+            <a class="auth-card__brand" href="{{ path('app_home') }}">
+                🐾 Pet <strong>Concierge</strong>
+            </a>
+
+            <div class="auth-card__illustration">
+                {% if imagen_login %}
+                    <img
+                        src="{{ asset(imagen_login) }}"
+                        alt="Bluey saltando con un frisbee"
+                    >
+                {% else %}
+                    <span class="auth-card__placeholder">🐶</span>
+                {% endif %}
+            </div>
+
+            <div class="auth-card__visual-text">
+                <span>Bienestar que nos conecta</span>
+                <h2>¡Cada paseo cuenta!</h2>
+
+                <p>
+                    Una comunidad que cuida a sus mascotas
+                    y crece con cada paso.
+                </p>
+            </div>
+        </div>
+
+        <div class="auth-card__content">
+
+            <div class="auth-card__heading">
+                <span class="auth-card__eyebrow">
+                    BIENVENIDO DE NUEVO
+                </span>
+
+                <h1>Inicia sesión</h1>
+
+                <p>
+                    Ingresa a tu cuenta de Pet Concierge
+                    para continuar.
+                </p>
+            </div>
+
+            {% for mensaje in app.flashes('success') %}
+                <div class="auth-form__success" role="status">
+                    ✓ {{ mensaje }}
+                </div>
+            {% endfor %}
+
+            {% if error %}
+                <div class="auth-form__error" role="alert">
+                    El correo o la contraseña no son correctos.
+                </div>
+            {% endif %}
+
+            <form
+                class="auth-form"
+                action="{{ path('app_login') }}"
+                method="post"
+            >
+                <div class="auth-form__group">
+                    <label for="email" class="auth-form__label">
+                        Correo electrónico
+                    </label>
+
+                    <input
+                        id="email"
+                        class="auth-form__input"
+                        type="email"
+                        name="_username"
+                        value="{{ last_username }}"
+                        placeholder="correo@ejemplo.com"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="auth-form__group">
+                    <label for="password" class="auth-form__label">
+                        Contraseña
+                    </label>
+
+                    <input
+                        id="password"
+                        class="auth-form__input"
+                        type="password"
+                        name="_password"
+                        placeholder="Ingresa tu contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <input
+                    type="hidden"
+                    name="_csrf_token"
+                    value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button class="auth-form__submit" type="submit">
+                    Iniciar sesión
+                </button>
+
+                <p class="auth-form__note">
+                    🔒 Tus datos están protegidos.
+                </p>
+            </form>
+
+            <div class="auth-form__register">
+                ¿No tienes una cuenta?
+                <a href="{{ path('app_registro') }}">
+                    Regístrate gratis
+                </a>
+            </div>
+
+            <div class="auth-card__footer">
+                <span>🐾 Pet Concierge</span>
+                <span>Cuidamos cada paso.</span>
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

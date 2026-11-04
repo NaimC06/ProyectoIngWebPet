@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ es_nuevo ? 'Nuevo usuario' : 'Editar usuario' }} | Pet Concierge
+{% endblock %}
+
+{% block body %}
+
+<main class="admin-user-page">
+
+    <div class="admin-user-page__container">
+
+        <a class="admin-user-page__back"
+           href="{{ path('app_admin_usuarios') }}">
+            ← Volver a usuarios
+        </a>
+
+        <div class="admin-user-page__heading">
+            <span>ADMINISTRACIÓN MVC</span>
+
+            <h1>
+                {{ es_nuevo ? 'Crear nuevo usuario' : 'Editar usuario' }}
+            </h1>
+
+            <p>
+                La información se validará en el servidor
+                antes de guardarse en SQLite.
+            </p>
+        </div>
+
+        <section class="admin-user-page__card">
+
+            {{ form_start(formulario, {
+                attr: {class: 'admin-user-form'}
+            }) }}
+
+                {{ form_errors(formulario) }}
+
+                <div class="admin-user-form__grid">
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.nombre) }}
+                        {{ form_widget(formulario.nombre) }}
+                        {{ form_errors(formulario.nombre) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.apellido) }}
+                        {{ form_widget(formulario.apellido) }}
+                        {{ form_errors(formulario.apellido) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.email) }}
+                        {{ form_widget(formulario.email) }}
+                        {{ form_errors(formulario.email) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.cedula) }}
+                        {{ form_widget(formulario.cedula) }}
+                        {{ form_errors(formulario.cedula) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.rol) }}
+                        {{ form_widget(formulario.rol) }}
+                        {{ form_errors(formulario.rol) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.contrasenaNueva) }}
+                        {{ form_widget(formulario.contrasenaNueva) }}
+                        {{ form_errors(formulario.contrasenaNueva) }}
+                    </div>
+
+                </div>
+
+                {% if not es_nuevo %}
+                    <p class="admin-user-form__hint">
+                        Deja la nueva contraseña vacía si no deseas cambiarla.
+                    </p>
+                {% endif %}
+
+                <div class="admin-user-form__actions">
+                    <a class="admin-user-form__cancel"
+                       href="{{ path('app_admin_usuarios') }}">
+                        Cancelar
+                    </a>
+
+                    <button class="admin-user-button" type="submit">
+                        {{ es_nuevo ? 'Guardar usuario' : 'Guardar cambios' }}
+                    </button>
+                </div>
+
+            {{ form_end(formulario) }}
+
+        </section>
+
+    </div>
+
+</main>
+
+{% endblock %}
