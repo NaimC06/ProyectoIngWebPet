@@ -1,0 +1,86 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}{{ perro.nombre }} | Pet Concierge{% endblock %}
+
+{% block admin_content %}
+
+<div class="users-admin">
+    <div class="users-admin__container">
+
+        <a class="admin-user-page__back"
+           href="{{ path("app_admin_perros") }}">
+            ← Volver a perros
+        </a>
+
+        <div class="admin-user-page__heading">
+            <span>ADMINISTRACIÓN MVC</span>
+
+            <h1>{{ perro.nombre }}</h1>
+
+            <p>Detalle completo de la mascota</p>
+        </div>
+
+        <section class="admin-user-page__card">
+
+            <div class="admin-user-form__grid">
+
+                <div class="admin-user-form__field">
+                    <label>ID</label>
+                    <strong>#{{ perro.id }}</strong>
+                </div>
+
+                <div class="admin-user-form__field">
+                    <label>Nombre</label>
+                    <strong>{{ perro.nombre }}</strong>
+                </div>
+
+                <div class="admin-user-form__field">
+                    <label>Raza</label>
+                    <strong>{{ perro.raza }}</strong>
+                </div>
+
+                <div class="admin-user-form__field">
+                    <label>Edad</label>
+                    <strong>{{ perro.edad }} años</strong>
+                </div>
+
+                <div class="admin-user-form__field">
+                    <label>Tamaño</label>
+                    <span class="users-admin__status users-admin__status--{{ perro.tamano }}">
+                        {{ perro.tamano|capitalize }}
+                    </span>
+                </div>
+
+                <div class="admin-user-form__field">
+                    <label>Propietario</label>
+                    {% if perro.propietario %}
+                        <strong>{{ perro.propietario.nombreCompleto }}</strong>
+                        <small>{{ perro.propietario.email }}</small>
+                        {% if perro.propietario.cedula %}
+                            <br><small>Cédula: {{ perro.propietario.cedula }}</small>
+                        {% endif %}
+                    {% else %}
+                        <em>Sin propietario asignado</em>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="admin-user-form__actions">
+                <a class="admin-user-form__cancel"
+                   href="{{ path("app_admin_perro_editar", {id: perro.id}) }}">
+                    Editar
+                </a>
+
+                <a class="admin-user-form__cancel"
+                   href="{{ path("app_admin_perros") }}">
+                    Volver a la lista
+                </a>
+            </div>
+
+        </section>
+
+    </div>
+</div>
+
+{% endblock %}

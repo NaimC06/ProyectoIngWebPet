@@ -23,3 +23,5 @@
 *.db
 *.sqlite
 *.sqlite3
+/diagnostico-modulos.txt
+/README.respaldo-local.txt

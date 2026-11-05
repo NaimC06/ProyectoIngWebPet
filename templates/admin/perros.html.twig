@@ -1,0 +1,156 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}Perros | Pet Concierge{% endblock %}
+
+{% block admin_content %}
+
+<div class="users-admin">
+    <div class="users-admin__container">
+
+        <section class="users-admin__intro">
+            <div>
+                <span class="users-admin__eyebrow">
+                    ADMINISTRACIÓN MVC
+                </span>
+
+                <h1>Gestión de perros</h1>
+
+                <p>
+                    Administra las mascotas registradas y sus propietarios.
+                </p>
+            </div>
+
+            <div class="users-admin__intro-icon">
+                🐶
+            </div>
+        </section>
+
+        <section class="users-admin__stats">
+            <article class="users-admin__stat">
+                <span>Total de perros</span>
+                <strong>{{ perros|length }}</strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Con propietario</span>
+                <strong>
+                    {% set count = 0 %}
+                    {% for p in perros %}
+                        {% if p.propietario %}{% set count = count + 1 %}{% endif %}
+                    {% endfor %}
+                    {{ count }}
+                </strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Tamaño grande</span>
+                <strong>
+                    {% set count = 0 %}
+                    {% for p in perros %}
+                        {% if p.tamano == "grande" %}{% set count = count + 1 %}{% endif %}
+                    {% endfor %}
+                    {{ count }}
+                </strong>
+            </article>
+
+            <article class="users-admin__stat">
+                <span>Promedio edad</span>
+                <strong>
+                    {% if perros|length > 0 %}
+                        {{ (perros|reduce((carry, p) => carry + p.edad, 0) / perros|length)|round(1, "floor") }} años
+                    {% else %}
+                        —
+                    {% endif %}
+                </strong>
+            </article>
+        </section>
+
+        {% for mensaje in app.flashes("success") %}
+            <div class="admin-user-alert" role="status">
+                ✓ {{ mensaje }}
+            </div>
+        {% endfor %}
+
+        <section class="users-admin__panel">
+            <div class="users-admin__panel-heading">
+                <div>
+                    <h2>Perros registrados</h2>
+                    <p>
+                        Información obtenida desde SQLite.
+                    </p>
+                </div>
+
+                <a class="users-admin__count" href="{{ path("app_admin_perro_nuevo") }}">
+                    + Nuevo perro
+                </a>
+            </div>
+
+            <div class="users-admin__table-wrapper">
+                <table class="users-admin__table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Raza</th>
+                            <th>Edad</th>
+                            <th>Tamaño</th>
+                            <th>Propietario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for perro in perros %}
+                        <tr>
+                            <td>#{{ perro.id }}</td>
+
+                            <td>
+                                <strong>{{ perro.nombre }}</strong>
+                            </td>
+
+                            <td>{{ perro.raza }}</td>
+
+                            <td>{{ perro.edad }} años</td>
+
+                            <td>
+                                <span class="users-admin__status users-admin__status--{{ perro.tamano }}">
+                                    {{ perro.tamano|capitalize }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {% if perro.propietario %}
+                                    <strong>{{ perro.propietario.nombreCompleto }}</strong>
+                                    <small>{{ perro.propietario.email }}</small>
+                                {% else %}
+                                    <em>Sin propietario</em>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <a class="admin-user-link"
+                                   href="{{ path("app_admin_perro_ver", {id: perro.id}) }}">
+                                    Ver
+                                </a>
+                                <a class="admin-user-link"
+                                   href="{{ path("app_admin_perro_editar", {id: perro.id}) }}">
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">
+                                No hay perros registrados.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+{% endblock %}

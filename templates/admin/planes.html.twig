@@ -1,0 +1,112 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Planes | Pet Concierge{% endblock %}
+
+{% block admin_content %}
+<div class="pet-module">
+
+    <header class="pet-module__heading">
+        <div>
+            <span class="pet-module__eyebrow">
+                ADMINISTRACIÓN MVC
+            </span>
+            <h1>🌿 Planes prepagados</h1>
+            <p>
+                Administra los planes disponibles
+                para los clientes de Pet Concierge.
+            </p>
+        </div>
+
+        <a class="pet-module__button"
+           href="{{ path('app_admin_plan_nuevo') }}">
+            + Nuevo plan
+        </a>
+    </header>
+
+    {% for mensaje in app.flashes('success') %}
+        <div class="pet-module__success">
+            ✓ {{ mensaje }}
+        </div>
+    {% endfor %}
+
+    <section class="pet-module__card">
+        <div class="pet-module__card-heading">
+            <h2>Planes registrados</h2>
+            <span>{{ planes|length }} registros</span>
+        </div>
+
+        <div class="pet-module__table-scroll">
+            <table class="pet-module__table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Plan</th>
+                        <th>Precio</th>
+                        <th>Paseos</th>
+                        <th>Duración</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for plan in planes %}
+                        <tr>
+                            <td>#{{ plan.id }}</td>
+
+                            <td>
+                                <strong>{{ plan.nombre }}</strong>
+                                <small>
+                                    Plan prepagado de paseos
+                                </small>
+                            </td>
+
+                            <td>
+                                ${{ (plan.precio / 100)|number_format(2, '.', ',') }}
+                            </td>
+
+                            <td>{{ plan.cantidadPaseos }}</td>
+                            <td>{{ plan.duracionDias }} días</td>
+
+                            <td>
+                                {% if plan.estado == 'activo' %}
+                                    <span class="pet-module__status pet-module__status--active">
+                                        Activo
+                                    </span>
+                                {% else %}
+                                    <span class="pet-module__status pet-module__status--inactive">
+                                        Inactivo
+                                    </span>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="pet-module__actions">
+                                    <a href="{{ path('app_admin_plan_ver', {id: plan.id}) }}">
+                                        Ver
+                                    </a>
+
+                                    <a href="{{ path('app_admin_plan_editar', {id: plan.id}) }}">
+                                        Editar
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="pet-module__empty">
+                                <strong>No hay planes registrados.</strong>
+                                <p>
+                                    Utiliza el botón Nuevo plan
+                                    para crear el primero.
+                                </p>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    {{ es_nuevo ? 'Nuevo plan' : 'Editar plan' }} | Pet Concierge
+{% endblock %}
+
+{% block admin_content %}
+<div class="pet-module pet-module--narrow">
+
+    <a class="pet-module__back"
+       href="{{ path('app_admin_planes') }}">
+        ← Volver a planes
+    </a>
+
+    <header class="pet-module__heading">
+        <div>
+            <span class="pet-module__eyebrow">
+                ADMINISTRACIÓN MVC
+            </span>
+
+            <h1>
+                {{ es_nuevo ? '🌿 Crear plan' : '🌿 Editar plan' }}
+            </h1>
+
+            <p>
+                Configura los beneficios y condiciones
+                del plan prepagado.
+            </p>
+        </div>
+    </header>
+
+    <section class="pet-module__card">
+        {{ form_start(formulario, {
+            attr: {
+                class: 'pet-module__form',
+                novalidate: 'novalidate'
+            }
+        }) }}
+
+            {{ form_errors(formulario) }}
+
+            <div class="pet-module__form-grid">
+                {% for campo in formulario %}
+                    {% if campo.vars.name != '_token' %}
+                        <div class="pet-module__field">
+                            {{ form_label(campo) }}
+                            {{ form_widget(campo) }}
+                            {{ form_errors(campo) }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="pet-module__form-actions">
+                <a class="pet-module__secondary"
+                   href="{{ path('app_admin_planes') }}">
+                    Cancelar
+                </a>
+
+                <button class="pet-module__button" type="submit">
+                    {{ es_nuevo ? 'Guardar plan' : 'Guardar cambios' }}
+                </button>
+            </div>
+
+        {{ form_end(formulario) }}
+    </section>
+
+</div>
+{% endblock %}

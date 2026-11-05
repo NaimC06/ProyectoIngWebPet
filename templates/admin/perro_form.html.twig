@@ -1,0 +1,92 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    {{ es_nuevo ? "Nuevo perro" : "Editar perro" }} | Pet Concierge
+{% endblock %}
+
+{% block admin_content %}
+
+<main class="admin-user-page">
+
+    <div class="admin-user-page__container">
+
+        <a class="admin-user-page__back"
+           href="{{ path("app_admin_perros") }}">
+            ← Volver a perros
+        </a>
+
+        <div class="admin-user-page__heading">
+            <span>ADMINISTRACIÓN MVC</span>
+
+            <h1>
+                {{ es_nuevo ? "Crear nuevo perro" : "Editar perro" }}
+            </h1>
+
+            <p>
+                La información se validará en el servidor
+                antes de guardarse en SQLite.
+            </p>
+        </div>
+
+        <section class="admin-user-page__card">
+
+            {{ form_start(formulario, {
+                attr: {class: "admin-user-form"}
+            }) }}
+
+                {{ form_errors(formulario) }}
+
+                <div class="admin-user-form__grid">
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.nombre) }}
+                        {{ form_widget(formulario.nombre) }}
+                        {{ form_errors(formulario.nombre) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.raza) }}
+                        {{ form_widget(formulario.raza) }}
+                        {{ form_errors(formulario.raza) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.edad) }}
+                        {{ form_widget(formulario.edad) }}
+                        {{ form_errors(formulario.edad) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.tamano) }}
+                        {{ form_widget(formulario.tamano) }}
+                        {{ form_errors(formulario.tamano) }}
+                    </div>
+
+                    <div class="admin-user-form__field">
+                        {{ form_label(formulario.propietario) }}
+                        {{ form_widget(formulario.propietario) }}
+                        {{ form_errors(formulario.propietario) }}
+                    </div>
+
+                </div>
+
+                <div class="admin-user-form__actions">
+                    <a class="admin-user-form__cancel"
+                       href="{{ path("app_admin_perros") }}">
+                        Cancelar
+                    </a>
+
+                    <button class="admin-user-button" type="submit">
+                        {{ es_nuevo ? "Guardar perro" : "Guardar cambios" }}
+                    </button>
+                </div>
+
+            {{ form_end(formulario) }}
+
+        </section>
+
+    </div>
+
+</main>
+
+{% endblock %}

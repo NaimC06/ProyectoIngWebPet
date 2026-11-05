@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Detalle de plan | Pet Concierge{% endblock %}
+
+{% block admin_content %}
+<div class="pet-module pet-module--narrow">
+
+    <a class="pet-module__back"
+       href="{{ path('app_admin_planes') }}">
+        ← Volver a planes
+    </a>
+
+    <header class="pet-module__heading">
+        <div>
+            <span class="pet-module__eyebrow">
+                DETALLE DE PLAN
+            </span>
+
+            <h1>🌿 {{ plan.nombre }}</h1>
+
+            <p>
+                Consulta las características
+                del plan seleccionado.
+            </p>
+        </div>
+    </header>
+
+    <section class="pet-module__card">
+        <div class="pet-module__details">
+
+            <div>
+                <span>Información</span>
+                <strong>
+                    Plan prepagado de paseos
+                </strong>
+            </div>
+
+            <div>
+                <span>Precio</span>
+                <strong>
+                    ${{ (plan.precio / 100)|number_format(2, '.', ',') }}
+                </strong>
+            </div>
+
+            <div>
+                <span>Paseos incluidos</span>
+                <strong>{{ plan.cantidadPaseos }}</strong>
+            </div>
+
+            <div>
+                <span>Duración</span>
+                <strong>{{ plan.duracionDias }} días</strong>
+            </div>
+
+            <div>
+                <span>Estado</span>
+                <strong>{{ plan.estado|capitalize }}</strong>
+            </div>
+
+        </div>
+
+        <div class="pet-module__form-actions">
+            <a class="pet-module__secondary"
+               href="{{ path('app_admin_planes') }}">
+                Volver
+            </a>
+
+            <a class="pet-module__button"
+               href="{{ path('app_admin_plan_editar', {id: plan.id}) }}">
+                Editar plan
+            </a>
+        </div>
+
+    </section>
+
+</div>
+{% endblock %}
