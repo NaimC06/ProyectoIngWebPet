@@ -84,6 +84,7 @@ final class PaseoType extends AbstractType
             ])
             ->add('duracion', IntegerType::class, [
                 'label' => 'Duración (minutos)',
+                'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new Assert\Range(
@@ -177,11 +178,7 @@ final class PaseoType extends AbstractType
                     if ($data->getPerro()->getPropietario()->getId() !== $data->getCliente()->getId()) {
                         $form->get('perro')->addError(
                             new \Symfony\Component\Form\FormError(
-                                'El perro seleccionado no pertenece al cliente indicado.',
-                                [],
-                                null,
-                                null
-                            )
+                                'El perro seleccionado no pertenece al cliente indicado.')
                         );
                     }
                 }
@@ -190,11 +187,7 @@ final class PaseoType extends AbstractType
                 if ($data->getPaseador() && !in_array('ROLE_PASEADOR', $data->getPaseador()->getRoles(), true)) {
                     $form->get('paseador')->addError(
                         new \Symfony\Component\Form\FormError(
-                            'El usuario seleccionado debe tener rol de paseador.',
-                            [],
-                            null,
-                            null
-                        )
+                            'El usuario seleccionado debe tener rol de paseador.')
                     );
                 }
             }

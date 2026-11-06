@@ -112,11 +112,7 @@ final class SuscripcionType extends AbstractType
                     if ($data->getFechaFin() < $data->getFechaInicio()) {
                         $form->get('fechaFin')->addError(
                             new \Symfony\Component\Form\FormError(
-                                'La fecha de finalización no puede ser anterior a la de inicio.',
-                                [],
-                                null,
-                                null
-                            )
+                                'La fecha de finalización no puede ser anterior a la de inicio.')
                         );
                     }
                 }
@@ -125,11 +121,7 @@ final class SuscripcionType extends AbstractType
                 if ($data->getPlan() && $data->getPaseosUtilizados() > $data->getPlan()->getCantidadPaseos()) {
                     $form->get('paseosUtilizados')->addError(
                         new \Symfony\Component\Form\FormError(
-                            'Los paseos utilizados no pueden superar los incluidos en el plan.',
-                            [],
-                            null,
-                            null
-                        )
+                            'Los paseos utilizados no pueden superar los incluidos en el plan.')
                     );
                 }
 
@@ -137,11 +129,7 @@ final class SuscripcionType extends AbstractType
                 if ($data->getUsuario() && !in_array('ROLE_CLIENTE', $data->getUsuario()->getRoles(), true)) {
                     $form->get('usuario')->addError(
                         new \Symfony\Component\Form\FormError(
-                            'El usuario seleccionado debe tener rol de cliente.',
-                            [],
-                            null,
-                            null
-                        )
+                            'El usuario seleccionado debe tener rol de cliente.')
                     );
                 }
             }

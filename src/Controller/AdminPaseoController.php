@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Paseo;
 use App\Form\PaseoType;
 use App\Repository\PaseoRepository;
+use App\Repository\PerroRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -98,10 +99,9 @@ final class AdminPaseoController extends AbstractController
     }
 
     #[Route('/admin/paseos/perros-por-cliente/{clienteId}', name: 'app_admin_paseos_perros_por_cliente', methods: ['GET'])]
-    public function perrosPorCliente(int $clienteId): JsonResponse
+    public function perrosPorCliente(int $clienteId, PerroRepository $repository): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $perros = $em->getRepository(\App\Entity\Perro::class)->findByPropietario($clienteId);
+        $perros = $repository->findByPropietario($clienteId);
 
         $data = [];
         foreach ($perros as $perro) {

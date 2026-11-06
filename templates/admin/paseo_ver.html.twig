@@ -1,0 +1,16 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Detalle del paseo | Pet Concierge{% endblock %}
+{% block admin_content %}
+<div class="pet-module pet-module--narrow"><a class="pet-module__back" href="{{ path('app_admin_paseos') }}">← Paseos</a>
+<header class="pet-module__heading"><div><h1>🐕 Paseo #{{ paseo.id }}</h1></div></header>
+<section class="pet-module__card">
+<p><strong>Cliente:</strong> {{ paseo.cliente ? paseo.cliente.nombreCompleto : '—' }}</p>
+<p><strong>Mascota:</strong> {{ paseo.perro ? paseo.perro.nombre : '—' }}</p>
+<p><strong>Paseador:</strong> {{ paseo.paseador ? paseo.paseador.nombreCompleto : 'Sin asignar' }}</p>
+<p><strong>Fecha y hora:</strong> {{ paseo.fechaHora ? paseo.fechaHora|date('d/m/Y H:i') : '—' }}</p>
+<p><strong>Estado:</strong> {{ paseo.estado }}</p>
+<p><strong>Precio:</strong> {{ paseo.precio is not null ? ('$' ~ paseo.precio) : 'No registrado' }}</p>
+<p><strong>Observaciones:</strong> {{ paseo.observaciones ?: 'Ninguna' }}</p>
+<p><a class="pet-module__button" href="{{ path('app_admin_paseo_editar', {id: paseo.id}) }}">Editar paseo</a></p>
+</section></div>
+{% endblock %}

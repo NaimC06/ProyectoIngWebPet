@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Paseos | Pet Concierge{% endblock %}
+{% block admin_content %}
+<div class="pet-module"><a class="pet-module__back" href="{{ path('app_admin_dashboard') }}">← Dashboard</a>
+  <header class="pet-module__heading"><div><span class="pet-module__eyebrow">ADMINISTRACIÓN MVC</span><h1>🐕 Paseos</h1><p>Servicios programados y realizados.</p></div></header>
+  {% for mensaje in app.flashes('success') %}<p class="admin-user-alert" role="status">✓ {{ mensaje }}</p>{% endfor %}
+  <section class="pet-module__card"><p><a class="pet-module__button" href="{{ path('app_admin_paseo_nuevo') }}">+ Nuevo paseo</a></p>
+    <div class="users-admin__table-wrapper"><table class="users-admin__table"><thead><tr><th>ID</th><th>Cliente</th><th>Perro</th><th>Paseador</th><th>Fecha</th><th>Estado</th><th>Opciones</th></tr></thead><tbody>
+    {% for p in paseos %}<tr><td>#{{ p.id }}</td><td>{{ p.cliente ? p.cliente.nombreCompleto : '—' }}</td><td>{{ p.perro ? p.perro.nombre : '—' }}</td><td>{{ p.paseador ? p.paseador.nombreCompleto : 'Sin asignar' }}</td><td>{{ p.fechaHora ? p.fechaHora|date('d/m/Y H:i') : '—' }}</td><td>{{ p.estado }}</td><td><a href="{{ path('app_admin_paseo_ver', {id:p.id}) }}">Ver</a> · <a href="{{ path('app_admin_paseo_editar', {id:p.id}) }}">Editar</a></td></tr>
+    {% else %}<tr><td colspan="7">No hay paseos registrados.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </section></div>
+{% endblock %}

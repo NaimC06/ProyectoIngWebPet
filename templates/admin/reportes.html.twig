@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Reportes | Pet Concierge{% endblock %}
+{% block admin_content %}
+<div class="pet-module"><a class="pet-module__back" href="{{ path('app_admin_dashboard') }}">← Dashboard</a>
+<header class="pet-module__heading"><div><span class="pet-module__eyebrow">CORE ESTADÍSTICO</span><h1>📈 Reportes</h1><p>Resultados calculados a partir de los paseos registrados.</p></div></header>
+<section class="pet-module__card">
+<form method="get" action="{{ path('app_admin_reportes') }}"><label>Mes <input type="number" name="mes" min="1" max="12" value="{{ mes_actual }}"></label> <label>Año <input type="number" name="anio" min="2020" max="2100" value="{{ anio_actual }}"></label> <button class="pet-module__button" type="submit">Filtrar</button></form>
+<hr><p><strong>Periodo:</strong> {{ mes_actual }}/{{ anio_actual }}</p><p><strong>Total de paseos:</strong> {{ reporte.total }}</p>
+<p><strong>Clientes con plan:</strong> {{ reporte.usuariosConPlan }} · <strong>Sin plan:</strong> {{ reporte.usuariosSinPlan }}</p>
+<h2>Paseos por estado</h2>
+<div class="users-admin__table-wrapper"><table class="users-admin__table"><thead><tr><th>Estado</th><th>Cantidad</th></tr></thead><tbody>
+{% for estado, total in reporte.porEstados %}<tr><td>{{ estado|capitalize }}</td><td>{{ total }}</td></tr>{% else %}<tr><td colspan="2">No hay datos.</td></tr>{% endfor %}
+</tbody></table></div>
+</section></div>
+{% endblock %}

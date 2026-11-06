@@ -30,7 +30,7 @@ final class AdminReporteController extends AbstractController
     #[Route('/admin/reportes', name: 'app_admin_reportes', methods: ['GET'])]
     public function index(Request $request): Response
     {
-        $mes = $request->query->getInt('mes', (int) date('m'));
+        $mes = sprintf('%02d', max(1, min(12, $request->query->getInt('mes', (int) date('m')))));
         $anio = $request->query->getInt('anio', (int) date('Y'));
 
         $reporte = $this->analisis->obtenerReporteCompleto($mes, $anio);

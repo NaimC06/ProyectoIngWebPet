@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Detalle de suscripción | Pet Concierge{% endblock %}
+{% block admin_content %}
+<div class="pet-module pet-module--narrow"><a class="pet-module__back" href="{{ path('app_admin_suscripciones') }}">← Suscripciones</a>
+  <header class="pet-module__heading"><div><h1>📋 Suscripción #{{ suscripcion.id }}</h1></div></header>
+  <section class="pet-module__card">
+  <p><strong>Cliente:</strong> {{ suscripcion.usuario ? suscripcion.usuario.nombreCompleto : 'Sin cliente' }}</p>
+  <p><strong>Plan:</strong> {{ suscripcion.plan ? suscripcion.plan.nombre : 'Sin plan' }}</p>
+  <p><strong>Inicio:</strong> {{ suscripcion.fechaInicio ? suscripcion.fechaInicio|date('d/m/Y') : '—' }}</p>
+  <p><strong>Vencimiento:</strong> {{ suscripcion.fechaFin ? suscripcion.fechaFin|date('d/m/Y') : '—' }}</p>
+  <p><strong>Paseos incluidos:</strong> {{ suscripcion.paseosIncluidos }}</p>
+  <p><strong>Paseos utilizados:</strong> {{ suscripcion.paseosUtilizados }}</p>
+  <p><strong>Disponibles:</strong> {{ suscripcion.paseosDisponibles }}</p>
+  <p><strong>Estado:</strong> {{ suscripcion.estado }}</p>
+  <p><a class="pet-module__button" href="{{ path('app_admin_suscripcion_editar', {id: suscripcion.id}) }}">Editar</a></p>
+  </section></div>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}Riesgos | Pet Concierge{% endblock %}
+{% block admin_content %}
+<div class="pet-module"><a class="pet-module__back" href="{{ path('app_admin_dashboard') }}">← Dashboard</a>
+<header class="pet-module__heading"><div><span class="pet-module__eyebrow">CORE ESTADÍSTICO</span><h1>⚠️ Indicadores de riesgo</h1><p>Alertas informativas basadas en suscripciones y clientes.</p></div></header>
+<section class="pet-module__card"><div class="users-admin__table-wrapper"><table class="users-admin__table"><thead><tr><th>Indicador</th><th>Cantidad</th><th>Nivel</th></tr></thead><tbody>
+{% for clave, riesgo in riesgos %}<tr><td>{{ riesgo.descripcion }}</td><td>{{ riesgo.valor }}</td><td>{{ riesgo.nivel|capitalize }}</td></tr>{% else %}<tr><td colspan="3">No hay indicadores disponibles.</td></tr>{% endfor %}
+</tbody></table></div></section></div>
+{% endblock %}
